@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Swal from "sweetalert2";
 
 const Buku = () => {
   const [data, setData] = useState([]);
@@ -19,12 +20,28 @@ const Buku = () => {
     localStorage.setItem("data", JSON.stringify([...data, newBuyer]));
     localStorage.setItem("idBook", idBook + 1);
     setIdBook(idBook + 1);
+    Swal.fire({
+      title: "Success",
+      text: "Book added successfully!",
+      icon: "success",
+    });
   };
 
   const handleDelete = (id) => {
-    const newData = data.filter((item) => item.id !== id);
-    setData(newData);
-    localStorage.setItem("data", JSON.stringify(newData));
+    Swal.fire({
+      title: "Are you sure you want to delete this data?",
+      showCancelButton: true,
+      confirmButtonText: "Yes",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const newData = data.filter((item) => item.id !== id);
+        setData(newData);
+        localStorage.setItem("data", JSON.stringify(newData));
+        Swal.fire("Data deleted successfully!", "", "success");
+      } else if (result.isDenied) {
+        Swal.fire("Changes are not saved", "", "info");
+      }
+    });
   };
 
   const handleEdit = (id) => {
@@ -55,6 +72,11 @@ const Buku = () => {
     event.target.reset();
     setIsEdit(false);
     localStorage.setItem("data", JSON.stringify(newData));
+    Swal.fire({
+      title: "Success",
+      text: "Data edited successfully!",
+      icon: "success",
+    });
   };
 
   useEffect(() => {
@@ -129,6 +151,7 @@ const Buku = () => {
               type="text"
               id="nama"
               className="w-full mt-1 input input-bordered"
+              required
             />
           </section>
           <section>
@@ -138,6 +161,7 @@ const Buku = () => {
               type="text"
               id="author"
               className="w-full mt-1 input input-bordered"
+              required
             />
           </section>
           <section>
@@ -147,6 +171,7 @@ const Buku = () => {
               type="text"
               id="deskripsi"
               className="w-full mt-1 input input-bordered"
+              required
             />
           </section>
           <section>
@@ -156,6 +181,7 @@ const Buku = () => {
               type="number"
               id="harga"
               className="w-full mt-1 input input-bordered"
+              required
             />
           </section>
           <section>

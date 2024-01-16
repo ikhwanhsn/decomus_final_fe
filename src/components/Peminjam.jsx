@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Swal from "sweetalert2";
 
 const Peminjam = () => {
   const [data, setData] = useState([]);
@@ -23,12 +24,28 @@ const Peminjam = () => {
     );
     localStorage.setItem("idPeminjam", idPeminjam + 1);
     setIdPeminjam(idPeminjam + 1);
+    Swal.fire({
+      title: "Success",
+      text: "Borrower successfully added!",
+      icon: "success",
+    });
   };
 
   const handleDelete = (id) => {
-    const newData = data.filter((item) => item.id !== id);
-    setData(newData);
-    localStorage.setItem("data_peminjam", JSON.stringify(newData));
+    Swal.fire({
+      title: "Are you sure you want to delete this data?",
+      showCancelButton: true,
+      confirmButtonText: "Yes",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const newData = data.filter((item) => item.id !== id);
+        setData(newData);
+        localStorage.setItem("data_peminjam", JSON.stringify(newData));
+        Swal.fire("Data deleted successfully!", "", "success");
+      } else if (result.isDenied) {
+        Swal.fire("Changes are not saved", "", "info");
+      }
+    });
   };
 
   const handleEdit = (id) => {
@@ -59,6 +76,11 @@ const Peminjam = () => {
     event.target.reset();
     setIsEdit(false);
     localStorage.setItem("data_peminjam", JSON.stringify(newData));
+    Swal.fire({
+      title: "Success",
+      text: "Data edited successfully!",
+      icon: "success",
+    });
   };
 
   useEffect(() => {
@@ -136,6 +158,7 @@ const Peminjam = () => {
               type="text"
               id="nama_peminjam"
               className="w-full mt-1 input input-bordered"
+              required
             />
           </section>
           <section>
@@ -147,7 +170,7 @@ const Peminjam = () => {
               className="w-full px-2 py-3 mt-1 rounded-lg input input-bordered"
             >
               {dataBuku.map((item) => (
-                <option key={item.id} value={item.id}>
+                <option key={item.id} value={item.nama}>
                   {item.nama}
                 </option>
               ))}
@@ -161,6 +184,7 @@ const Peminjam = () => {
               name="tanggal_pinjam"
               id="tanggal_pinjam"
               className="w-full p-1 mt-2 input input-bordered"
+              required
             />
           </section>
           <section>
@@ -171,6 +195,7 @@ const Peminjam = () => {
               name="tanggal_pengembalian"
               id="tanggal_pengembalian"
               className="w-full p-1 mt-2 border input input-bordered"
+              required
             />
           </section>
           <section>
