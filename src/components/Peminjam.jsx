@@ -5,6 +5,7 @@ const Peminjam = () => {
   const [isEdit, setIsEdit] = useState(false);
   const [editIndex, setEditIndex] = useState(null);
   const [idPeminjam, setIdPeminjam] = useState(0);
+  const [dataBuku, setDataBuku] = useState([]);
   const handleSubmit = (event) => {
     event.preventDefault();
     const newPeminjam = {
@@ -65,6 +66,8 @@ const Peminjam = () => {
       setData(JSON.parse(localStorage.getItem("data_peminjam")));
     localStorage.getItem("idPeminjam") &&
       setIdPeminjam(localStorage.getItem("idPeminjam"));
+    localStorage.getItem("data") &&
+      setDataBuku(JSON.parse(localStorage.getItem("data")));
   }, []);
 
   return (
@@ -138,11 +141,17 @@ const Peminjam = () => {
           <section>
             <label htmlFor="nama_buku">Nama buku</label>
             <br />
-            <input
-              type="text"
+            <select
+              name="nama_buku"
               id="nama_buku"
-              className="w-full mt-1 input input-bordered"
-            />
+              className="w-full px-2 py-3 mt-1 rounded-lg input input-bordered"
+            >
+              {dataBuku.map((item) => (
+                <option key={item.id} value={item.id}>
+                  {item.nama}
+                </option>
+              ))}
+            </select>
           </section>
           <section>
             <label htmlFor="tanggal_pinjam">Tanggal pinjam</label>
@@ -151,7 +160,7 @@ const Peminjam = () => {
               type="date"
               name="tanggal_pinjam"
               id="tanggal_pinjam"
-              className="w-full p-1 mt-2 border"
+              className="w-full p-1 mt-2 input input-bordered"
             />
           </section>
           <section>
@@ -161,7 +170,7 @@ const Peminjam = () => {
               type="date"
               name="tanggal_pengembalian"
               id="tanggal_pengembalian"
-              className="w-full p-1 mt-2 border"
+              className="w-full p-1 mt-2 border input input-bordered"
             />
           </section>
           <section>
