@@ -148,18 +148,20 @@ const Peminjam = () => {
             <label htmlFor="tanggal_pinjam">Tanggal pinjam</label>
             <br />
             <input
-              type="text"
+              type="date"
+              name="tanggal_pinjam"
               id="tanggal_pinjam"
-              className="w-full mt-1 input input-bordered"
+              className="w-full p-1 mt-2 border"
             />
           </section>
           <section>
             <label htmlFor="tanggal_pengembalian">Tanggal pengembalian</label>
             <br />
             <input
-              type="number"
+              type="date"
+              name="tanggal_pengembalian"
               id="tanggal_pengembalian"
-              className="w-full mt-1 input input-bordered"
+              className="w-full p-1 mt-2 border"
             />
           </section>
           <section>

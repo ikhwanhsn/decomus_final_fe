@@ -26,17 +26,17 @@ function App() {
         {/* <Crud /> */}
         <section className="mt-20">
           <button
-            onClick={() => setIsPinjam(!isPinjam)}
+            onClick={() => setIsPinjam(false)}
             className={`btn mr-2 ${
-              !isPinjam ? "btn-primary" : "text-black"
+              !isPinjam ? "btn-primary" : "bg-gray-300"
             } text-white`}
           >
             Daftar Buku
           </button>
           <button
-            onClick={() => setIsPinjam(!isPinjam)}
+            onClick={() => setIsPinjam(true)}
             className={`btn text-white ${
-              !isPinjam ? "text-black" : "btn-primary"
+              !isPinjam ? "bg-gray-300" : "btn-primary"
             }`}
           >
             Daftar Peminjam
